@@ -3,7 +3,7 @@ const fs = require("fs");
 const HabitablePlanet = [];
 //this function will check if the planet is habitable or not. If the planet is habitable then it will return true otherwise it will return false.
 const isHabitablePlanet = (planet) => {
-    return planet['koi_disposition'] === 'CONFIRMED'
+    return planet['koi_disposition'] === 'CONFIRMED' && planet['koi_insol'] > 0.36 && planet['koi_insol'] < 1.11 && planet['koi_prad'] < 1.6;
         }
 
 //first we will read the csv file and then we will parse it and then we will push the data into the results array and then we will log the results array to the console.
@@ -22,4 +22,4 @@ fs.createReadStream("kepler_data.csv")
 .on("err",(err)=>{
     console.log(err);
 })
-.on("end",()=>{console.log(HabitablePlanet,"result");});
+.on("end",()=>{console.log(HabitablePlanet.map((planet) => planet['kepler_name']),"result");});
